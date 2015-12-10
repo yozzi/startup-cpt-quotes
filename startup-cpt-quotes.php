@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 //GitHub Plugin Updater
-function startup_reloaded_quotes_updater() {
+function startup_cpt_quotes_updater() {
 	include_once 'lib/updater.php';
 	//define( 'WP_GITHUB_FORCE_UPDATE', true );
 	if ( is_admin() ) {
@@ -34,10 +34,10 @@ function startup_reloaded_quotes_updater() {
 	}
 }
 
-//add_action( 'init', 'startup_reloaded_quotes_updater' );
+//add_action( 'init', 'startup_cpt_quotes_updater' );
 
 //CPT
-function startup_reloaded_quotes() {
+function startup_cpt_quotes() {
 	$labels = array(
 		'name'                => _x( 'Quotes', 'Post Type General Name', 'startup-cpt-quotes' ),
 		'singular_name'       => _x( 'Quote', 'Post Type Singular Name', 'startup-cpt-quotes' ),
@@ -77,18 +77,18 @@ function startup_reloaded_quotes() {
 	register_post_type( 'quotes', $args );
 }
 
-add_action( 'init', 'startup_reloaded_quotes', 0 );
+add_action( 'init', 'startup_cpt_quotes', 0 );
 
 //Flusher les permalink à l'activation du plugin pour qu'ils fonctionnent sans mise à jour manuelle
-function startup_reloaded_quotes_rewrite_flush() {
-    startup_reloaded_quotes();
+function startup_cpt_quotes_rewrite_flush() {
+    startup_cpt_quotes();
     flush_rewrite_rules();
 }
 
-register_activation_hook( __FILE__, 'startup_reloaded_quotes_rewrite_flush' );
+register_activation_hook( __FILE__, 'startup_cpt_quotes_rewrite_flush' );
 
 // Capabilities
-function startup_reloaded_quotes_caps() {	
+function startup_cpt_quotes_caps() {	
 	$role_admin = get_role( 'administrator' );
 	$role_admin->add_cap( 'edit_quote' );
 	$role_admin->add_cap( 'read_quote' );
@@ -105,13 +105,13 @@ function startup_reloaded_quotes_caps() {
 	$role_admin->add_cap( 'edit_published_quotes' );
 }
 
-register_activation_hook( __FILE__, 'startup_reloaded_quotes_caps' );
+register_activation_hook( __FILE__, 'startup_cpt_quotes_caps' );
 
 // Metaboxes
-function startup_reloaded_quotes_meta() {
+function startup_cpt_quotes_meta() {
     
 	// Start with an underscore to hide fields from custom fields list
-	$prefix = '_startup_reloaded_quotes_';
+	$prefix = '_startup_cpt_quotes_';
 
 	$cmb_box = new_cmb2_box( array(
 		'id'            => $prefix . 'metabox',
@@ -127,5 +127,5 @@ function startup_reloaded_quotes_meta() {
 
 }
 
-add_action( 'cmb2_admin_init', 'startup_reloaded_quotes_meta' );
+add_action( 'cmb2_admin_init', 'startup_cpt_quotes_meta' );
 ?>
